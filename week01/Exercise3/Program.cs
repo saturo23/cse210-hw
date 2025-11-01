@@ -7,11 +7,13 @@ class Program
     {
         Console.WriteLine("Hello World! This is the Exercise3 Project.");
 
-        Console.Write("What is the magic number? ");
-        string magicInput = Console.ReadLine();
-        int magicNumber = int.Parse(magicInput);
+        // create a random generator
+        Random randomGenerator = new Random();
+        int magicNumber = randomGenerator.Next(1, 101); // random number between 1 and 100
 
         int guess = -1; // starts the loop with invalid guess
+
+        Console.Write("l have a magic number between 1 and 100. What is your guess? ");
 
         while (guess != magicNumber)
         {
