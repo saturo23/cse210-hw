@@ -48,7 +48,7 @@ class Program
             Console.Write("Thank you for playing! Do you want to play again? (yes/no): ");
             playAgain = Console.ReadLine();
 
-            Console.WriteLine("\n Goodbye!");
+            Console.WriteLine("\n thank you for playing.");
         }
 
     }
