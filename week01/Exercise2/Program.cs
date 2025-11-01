@@ -11,6 +11,7 @@ class Program
 
         string letter = "";
 
+        // Determine the letter grade
         if (grade >= 90)
         {
             letter = "A";
@@ -32,24 +33,40 @@ class Program
             letter = "F";
         }
 
-        if (grade % 10 >= 7 && grade < 100)
+        // Determines the sign (+, -, or none)
+        string sign = "";
+        int lastDigit = grade % 10;
+
+        if (lastDigit >= 7)
         {
-            letter += "+";
+            sign = "+";
         }
-        else if (grade % 10 < 3 && grade >= 60)
+        else if (lastDigit < 3)
         {
-            letter += "-";
+            sign = "-";
         }
 
-        Console.WriteLine($"Your letter grade is: {letter}");
+        // Handles special cases
+        if (letter == "A" && sign == "+")
+        {
+            sign = ""; // No A+
+        }
+        if (letter == "F")
+        {
+            sign = ""; // No F+ or F-
+        }
 
+    
+        Console.WriteLine($"Your letter grade is: {letter}{sign}");
+
+        
         if (grade >= 70)
         {
-            Console.WriteLine("Congratulations! you have passed the course.");
+            Console.WriteLine("Congratulations! You have passed the course.");
         }
         else
         {
-            Console.WriteLine("Unfortunately, you have not passed the course. Try harder next time!");
+            Console.WriteLine("You did not pass. Keep trying you can do it next time!");
         }
     
     }
