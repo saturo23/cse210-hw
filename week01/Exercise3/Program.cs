@@ -12,6 +12,7 @@ class Program
         int magicNumber = randomGenerator.Next(1, 101); // random number between 1 and 100
 
         int guess = -1; // starts the loop with invalid guess
+        int guessCounter = 0; // counts the number of guesses
 
         Console.Write("l have a magic number between 1 and 100. What is your guess? ");
 
@@ -20,6 +21,8 @@ class Program
             Console.Write("What is your guess? ");
             string guessInput = Console.ReadLine();
             guess = int.Parse(guessInput);
+            guessCounter++;
+
 
             if (guess < magicNumber)
             {
@@ -31,7 +34,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("You guessed it!");
+                Console.WriteLine($"You guessed it! congratulations! It took you {guessCounter} guesses to find the magic number {magicNumber}.");
             }
         }
     }
