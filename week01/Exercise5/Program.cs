@@ -2,20 +2,37 @@ using System;
 
 class Program
 {
-    // Displays a welcome message to the user
+    static void Main(string[] args)
+    {
+        // Display welcome message
+        DisplayWelcome();
+
+        // Get user's name and favorite number
+        string userName = PromptUserName();
+        int userNumber = PromptUserNumber();
+
+        // Calculate the square of the number
+        int squaredNumber = SquareNumber(userNumber);
+
+        // Show the final result
+        DisplayResult(userName, squaredNumber);
+    }
+
+    // Displays a welcome message
     static void DisplayWelcome()
     {
         Console.WriteLine("Welcome to the program!");
     }
 
-    // Prompts the user for their name and returns it
+    // Prompts for and returns the user's name
     static string PromptUserName()
     {
         Console.Write("Please enter your name: ");
         string name = Console.ReadLine();
         return name;
     }
-    // Prompts the user for their favorite number and returns it as an integer
+
+    // Prompts for and returns the user's favorite number
     static int PromptUserNumber()
     {
         Console.Write("Please enter your favorite number: ");
@@ -23,28 +40,15 @@ class Program
         return number;
     }
 
-    // Squares the given number and returns the result
+    // Returns the square of the given number
     static int SquareNumber(int number)
     {
         return number * number;
     }
 
-    // Displays the final result using the user's name and squared number
+    // Displays the user's name and the squared number
     static void DisplayResult(string name, int squaredNumber)
     {
         Console.WriteLine($"{name}, the square of your number is {squaredNumber}");
-    }
-
-    // Main method — calls all other functions in the correct order
-    static void Main(string[] args)
-    {
-        DisplayWelcome();
-
-        string userName = PromptUserName();
-        int userNumber = PromptUserNumber();
-
-        int squaredNumber = SquareNumber(userNumber);
-
-        DisplayResult(userName, squaredNumber);
     }
 }
