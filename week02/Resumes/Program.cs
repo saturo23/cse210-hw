@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello — Resume Program starting...\n");
+        Console.WriteLine("Hello, Welcome to my resume ...\n");
 
         Job job1 = new Job();
         job1._company = "Microsoft";
