@@ -4,43 +4,37 @@ class Program
 {
     static void Main(string[] args)
     {
-       
-        DisplayWelcome();
+        Console.WriteLine("Hello — Resume Program starting...\n");
 
-        string userName = PromptUserName();
-        int userNumber = PromptUserNumber();
+        Job job1 = new Job();
+        job1._company = "Microsoft";
+        job1._jobTitle = "Software Engineer";
+        job1._startYear = 2019;
+        job1._endYear = 2022;
 
-        int squaredNumber = SquareNumber(userNumber);
+        Job job2 = new Job();
+        job2._company = "Apple";
+        job2._jobTitle = "Manager";
+        job2._startYear = 2022;
+        job2._endYear = 2023;
 
-        DisplayResult(userName, squaredNumber);
-    }
+        Console.WriteLine(job1._company);
+        Console.WriteLine(job2._company);
+        Console.WriteLine();
 
-    static void DisplayWelcome()
-    {
-        Console.WriteLine("Welcome to the program!");
-    }
+        job2.Display();
+        Console.WriteLine();
 
-    static string PromptUserName()
-    {
-        Console.Write("Please enter your name: ");
-        string name = Console.ReadLine();
-        return name;
-    }
+        Resume myResume = new Resume();
+        myResume._name = "Allison Rose";
+        myResume._jobs.Add(job1);
+        myResume._jobs.Add(job2);
 
-    static int PromptUserNumber()
-    {
-        Console.Write("Please enter your favorite number: ");
-        int number = int.Parse(Console.ReadLine());
-        return number;
-    }
+        Console.WriteLine(myResume._jobs[0]._jobTitle);
+        Console.WriteLine();
 
-    static int SquareNumber(int number)
-    {
-        return number * number;
-    }
+      
+        myResume.Display();
 
-    static void DisplayResult(string name, int squaredNumber)
-    {
-        Console.WriteLine($"{name}, the square of your number is {squaredNumber}");
     }
 }
