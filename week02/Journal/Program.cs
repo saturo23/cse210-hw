@@ -3,8 +3,6 @@ using System;
 /// This program helps users keep a daily journal by providing random prompts,
 /// saving entries to a file, and loading them later.
 /// It demonstrates the principles of abstraction, encapsulation, and class design.
-/// 
-/// Exceeding Requirements:
 /// Added extra prompts beyond the required five.
 /// Added file existence validation and user feedback.
 /// Added success messages for user clarity.
