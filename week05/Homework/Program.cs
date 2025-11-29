@@ -4,8 +4,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.Writeline("Hello, Welcome to my HomeWork Program ")
-
         // Test the base Assignment class
         Assignment a1 = new Assignment("Samuel Bennett", "Multiplication");
         Console.WriteLine(a1.GetSummary());
