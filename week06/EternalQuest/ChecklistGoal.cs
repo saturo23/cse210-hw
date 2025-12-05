@@ -1,3 +1,6 @@
+// ChecklistGoal.cs
+// A goal that requires N completions. Awards points each time and a bonus when target reached.
+
 using System;
 
 namespace EternalQuest
@@ -8,16 +11,16 @@ namespace EternalQuest
         private int _targetCount;
         private int _bonusPoints;
 
-        // Constructor for new
+        // Constructor for new checklist goal
         public ChecklistGoal(string title, string description, int pointsPerEvent, int targetCount, int bonus)
             : base(title, description, pointsPerEvent)
         {
+            _timesCompleted = 0;
             _targetCount = targetCount;
             _bonusPoints = bonus;
-            _timesCompleted = 0;
         }
 
-        // Constructor for loading from file
+        // Constructor for loading from file (saved timesCompleted included)
         public ChecklistGoal(string title, string description, int pointsPerEvent, int timesCompleted, int targetCount, int bonus)
             : base(title, description, pointsPerEvent)
         {
@@ -30,7 +33,7 @@ namespace EternalQuest
         {
             if (_timesCompleted >= _targetCount)
             {
-                // Already finished
+                Console.WriteLine("This checklist goal is already finished. No points awarded.");
                 return 0;
             }
 
@@ -39,8 +42,12 @@ namespace EternalQuest
 
             if (_timesCompleted == _targetCount)
             {
-                // final completion bonus
                 awarded += _bonusPoints;
+                Console.WriteLine($"You completed the checklist! You earned {GetPoints()} + bonus { _bonusPoints } = {awarded} points.");
+            }
+            else
+            {
+                Console.WriteLine($"Progress recorded ({_timesCompleted}/{_targetCount}). You earned {GetPoints()} points.");
             }
 
             return awarded;
@@ -57,7 +64,5 @@ namespace EternalQuest
             // ChecklistGoal|title|desc|points|timesCompleted|targetCount|bonus
             return $"ChecklistGoal|{Escape(GetTitle())}|{Escape(GetDescription())}|{GetPoints()}|{_timesCompleted}|{_targetCount}|{_bonusPoints}";
         }
-
-        private string Escape(string s) => s.Replace("|", "/|");
     }
 }

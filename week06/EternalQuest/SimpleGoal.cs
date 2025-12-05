@@ -6,14 +6,14 @@ namespace EternalQuest
     {
         private bool _isComplete;
 
-        // Constructor used when creating new goal
+        // Constructor for creating a new SimpleGoal
         public SimpleGoal(string title, string description, int points)
             : base(title, description, points)
         {
             _isComplete = false;
         }
 
-        // Constructor used when loading from file
+        // Constructor used when loading from file (includes saved completion state)
         public SimpleGoal(string title, string description, int points, bool isComplete)
             : base(title, description, points)
         {
@@ -24,14 +24,13 @@ namespace EternalQuest
         {
             if (_isComplete)
             {
-                // already completed, no points
-                return 0;
+                Console.WriteLine("This goal is already complete. No points awarded.");
+                return 0; // already done
             }
-            else
-            {
-                _isComplete = true;
-                return GetPoints();
-            }
+
+            _isComplete = true;
+            Console.WriteLine($"Goal complete! You earned {GetPoints()} points.");
+            return GetPoints();
         }
 
         public override string GetDetailsString()
@@ -45,7 +44,5 @@ namespace EternalQuest
             // SimpleGoal|title|desc|points|isComplete
             return $"SimpleGoal|{Escape(GetTitle())}|{Escape(GetDescription())}|{GetPoints()}|{_isComplete}";
         }
-
-        private string Escape(string s) => s.Replace("|", "/|");
     }
 }

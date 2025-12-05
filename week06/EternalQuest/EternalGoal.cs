@@ -1,3 +1,6 @@
+// EternalGoal.cs
+// A goal that never completes. Each time you record it you gain points.
+
 using System;
 
 namespace EternalQuest
@@ -11,13 +14,13 @@ namespace EternalQuest
 
         public override int RecordEvent()
         {
-            // always add points; never completes
+            Console.WriteLine($"You recorded '{GetTitle()}'. You earned {GetPoints()} points.");
             return GetPoints();
         }
 
-        // Default details from base class are fine; include something clear
         public override string GetDetailsString()
         {
+            // Use infinity symbol to hint "never completes"
             return $"[∞] {GetTitle()} ({GetDescription()})";
         }
 
@@ -26,7 +29,5 @@ namespace EternalQuest
             // EternalGoal|title|desc|points
             return $"EternalGoal|{Escape(GetTitle())}|{Escape(GetDescription())}|{GetPoints()}";
         }
-
-        private string Escape(string s) => s.Replace("|", "/|");
     }
 }

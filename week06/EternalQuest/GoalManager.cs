@@ -1,3 +1,7 @@
+// GoalManager.cs
+// Manages the list of goals and the user's total points.
+// Responsible for adding goals, listing, recording events, and saving/loading.
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +13,10 @@ namespace EternalQuest
         private List<Goal> _goals = new List<Goal>();
         public int TotalPoints { get; private set; } = 0;
 
-        public void AddGoal(Goal g) => _goals.Add(g);
+        public void AddGoal(Goal goal)
+        {
+            _goals.Add(goal);
+        }
 
         public IReadOnlyList<Goal> GetGoals() => _goals.AsReadOnly();
 
@@ -27,32 +34,44 @@ namespace EternalQuest
             }
         }
 
+        // Record an event for the goal at index (0-based).
+        // The goal returns points earned (or negative), and we update TotalPoints.
         public void RecordEvent(int index)
         {
             if (index < 0 || index >= _goals.Count)
             {
-                Console.WriteLine("Invalid goal selection.");
+                Console.WriteLine("Invalid selection.");
                 return;
             }
 
-            var g = _goals[index];
-            int earned = g.RecordEvent();
-            TotalPoints += earned;
-            Console.WriteLine($"You earned {earned} points! Total: {TotalPoints}");
+            Goal g = _goals[index];
+            int change = g.RecordEvent();
+            TotalPoints += change;
+
+            Console.WriteLine($"Total points are now: {TotalPoints}");
         }
 
-        // Save to a simple text file: first line is total points, then each goal serialized on its own line
+        // Save format:
+        // First line: total points
+        // Following lines: one serialized goal per line
         public void Save(string filename)
         {
-            using (StreamWriter sw = new StreamWriter(filename))
+            try
             {
-                sw.WriteLine(TotalPoints);
-                foreach (var g in _goals)
+                using (StreamWriter sw = new StreamWriter(filename))
                 {
-                    sw.WriteLine(g.GetStringRepresentation());
+                    sw.WriteLine(TotalPoints);
+                    foreach (var g in _goals)
+                    {
+                        sw.WriteLine(g.GetStringRepresentation());
+                    }
                 }
+                Console.WriteLine($"Saved { _goals.Count } goals to {filename}.");
             }
-            Console.WriteLine($"Saved to {filename}");
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to save: {ex.Message}");
+            }
         }
 
         public void Load(string filename)
@@ -63,27 +82,33 @@ namespace EternalQuest
                 return;
             }
 
-            string[] lines = File.ReadAllLines(filename);
-            if (lines.Length == 0) return;
-
-            _goals.Clear();
-            TotalPoints = int.Parse(lines[0]);
-
-            for (int i = 1; i < lines.Length; i++)
+            try
             {
-                string line = lines[i];
-                try
-                {
-                    var g = Goal.CreateFromString(line);
-                    _goals.Add(g);
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Failed to load line {i+1}: {ex.Message}");
-                }
-            }
+                string[] lines = File.ReadAllLines(filename);
+                if (lines.Length == 0) return;
 
-            Console.WriteLine($"Loaded { _goals.Count } goals. Total points: {TotalPoints}");
+                _goals.Clear();
+                TotalPoints = int.Parse(lines[0]);
+
+                for (int i = 1; i < lines.Length; i++)
+                {
+                    try
+                    {
+                        var goal = Goal.CreateFromString(lines[i]);
+                        _goals.Add(goal);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Failed to load line {i + 1}: {ex.Message}");
+                    }
+                }
+
+                Console.WriteLine($"Loaded {_goals.Count} goals. Total points: {TotalPoints}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to load file: {ex.Message}");
+            }
         }
     }
 }
