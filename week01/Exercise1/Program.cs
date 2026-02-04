@@ -11,6 +11,6 @@ class Program
         Console.Write("");
         Console.WriteLine("What is your last name? ");
         string Surname = Console.ReadLine();
-        Console.WriteLine($"Your name is {Surname}, {name} {Surname}! Welcome to the Exercise1 Project.");
+        Console.WriteLine($"Your name is {Surname}, {name} {Surname}! Welcome to the Exercise 1 Project.");
     }
 }
